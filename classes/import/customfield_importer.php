@@ -15,6 +15,18 @@ class customfield_importer implements importer_field_interface {
         $this->area = $area;
     }
 
+    private function customfield_shortname_exists(string $shortname): bool {
+        global $DB;
+        return $DB->record_exists('customfield_field', ['shortname' => $shortname, 'component' => $this->component, 'area' => $this->area]);
+    }
+
+    private function customfield_category_exists(string $name): bool {
+        global $DB;
+        return $DB->record_exists('customfield_category', ['name' => $name, 'component' => $this->component, 'area' => $this->area]);
+    }
+
+
+
     public function import(array $data): void {
         global $DB;
 
@@ -27,11 +39,32 @@ class customfield_importer implements importer_field_interface {
         $category->sortorder = $data['category']['sortorder'] ?? 0;
         $category->component = $this->component;
         $category->area = $this->area;
+        $category->timecreated = time();
+        $category->timemodified = time();
         $category->itemid = 0;
+
+        if($this->customfield_category_exists($category->name)) {
+            throw new moodle_exception(
+                    'categoryalreadyexists',
+                    'tool_customfields_exportimport',
+                    '',
+                    $category->name
+            );
+        }
 
         $categoryid = $DB->insert_record('customfield_category', $category);
 
         foreach ($data['fields'] as $field) {
+
+            if ($this->customfield_shortname_exists($field['shortname'])) {
+                throw new moodle_exception(
+                        'shortnamealreadyexists',
+                        'tool_customfields_exportimport',
+                        '',
+                        $field['shortname']
+                );
+            }
+
             $fieldobj = new stdClass();
             $fieldobj->categoryid = $categoryid;
             $fieldobj->shortname = $field['shortname'];
@@ -40,7 +73,8 @@ class customfield_importer implements importer_field_interface {
             $fieldobj->description = $field['description'];
             $fieldobj->descriptionformat = $field['descriptionformat'];
             $fieldobj->sortorder = $field['sortorder'] ?? 0;
-            $fieldobj->param1 = $field['configdata'] ?? '';
+            $fieldobj->timecreated = time();
+            $fieldobj->timemodified = time();
 
             $DB->insert_record('customfield_field', $fieldobj);
         }
