@@ -1,21 +1,28 @@
 # moodle–tool_customfields_exportimport
 
-This plugin allows Moodle administrators to **export and import** custom fields in JSON format for the following components:
+This Moodle admin tool allows administrators to **export and import the structure** of custom fields in JSON format for the following components:
 
 - **User profile fields**
 - **Course custom fields**
 - **Cohort custom fields**
 
-The tool is accessible both via **command line interface (CLI)** and a **basic web interface** for import/export.
+The tool is available through both a **command-line interface (CLI)** and a **simple web interface**.
 
 ---
 
-##  Features
+## Features
 
-- Export profile, course or cohort custom fields to JSON
-- Import previously exported fields from a JSON file
+- Export user, course, or cohort custom fields to JSON
+- Import fields from a previously exported JSON file
 - CLI commands for automation and scripting
 - Basic web interface for manual operations
+- Multilingual support (English and French)
+
+---
+
+## Important Notes
+
+⚠️ This tool exports and imports **only the field structure** (categories and fields), not the data associated with these fields.
 
 ---
 
