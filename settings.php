@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,10 +18,11 @@
  *  tool_customfield_exportimport settings
  *
  * @package    tool_customfields_exportimport
- * @copyright 2024 Eticeo https://eticeo.com
- * @author    2024 mars Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 global $ADMIN, $DB, $USER,$CFG;

@@ -17,9 +17,10 @@
 /**
  * index file for customfields_exportimport
  *
- * @package   tool_customfields_exportimport
- * @copyright 2025 Serge Touvoli <serge.touvoli@eticeo.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    tool_customfields_exportimport
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once('../../../config.php');
