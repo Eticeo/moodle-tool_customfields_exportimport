@@ -44,6 +44,10 @@ $string['settingspage'] = 'Settings page';
 $string['settingsinfo'] = 'No settings available for now.';
 $string['export_title'] = 'Export Custom Fields';
 
+$string['fieldname'] = 'Name';
+$string['type'] = 'Type';
+$string['description'] = 'Description';
+$string['actions'] = 'Actions';
 
 // CLI
 $string['clihelp'] = 'Export customfields or user profile fields (JSON format).

@@ -103,7 +103,12 @@ function tool_customfields_exportimport_display_cohort_fields(): void {
         echo html_writer::end_div();
 
         $table = new html_table();
-        $table->head = ['Nom', 'Type', 'Description', 'Actions'];
+        $table->head = [
+                get_string('fieldname', 'tool_customfields_exportimport'),
+                get_string('type', 'tool_customfields_exportimport'),
+                get_string('description', 'tool_customfields_exportimport'),
+                get_string('actions', 'tool_customfields_exportimport'),
+        ];
         $table->data = [];
 
         foreach ($category->fields as $field) {

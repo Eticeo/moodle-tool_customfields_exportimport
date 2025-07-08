@@ -44,6 +44,10 @@ $string['settingspage'] = 'Paramètres';
 $string['settingsinfo'] = 'Aucun paramètre pour le moment.';
 $string['export_title'] = 'Exporter les champs personnalisés';
 
+$string['fieldname'] = 'Nom';
+$string['type'] = 'Type';
+$string['description'] = 'Description';
+$string['actions'] = 'Actions';
 
 // Cli
 $string['clihelp'] = 'Exporte les champs personnalisés ou les champs du profil utilisateur (au format JSON).
