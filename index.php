@@ -55,11 +55,11 @@ echo $OUTPUT->tabtree($tabs, $selectedtab);
 
 // Display the good fields based on the selected tab.
 if ($selectedtab === 'profile') {
-    display_profile_fields();
+    tool_customfields_exportimport_display_profile_fields();
 } else if ($selectedtab === 'course') {
-    display_course_fields();
+    tool_customfields_exportimport_display_course_fields();
 } else if ($selectedtab === 'cohort') {
-    display_cohort_fields();
+    tool_customfields_exportimport_display_cohort_fields();
 } else {
     echo $OUTPUT->notification(get_string('invalidtab', 'tool_customfields_exportimport'), 'error');
 }
@@ -75,7 +75,7 @@ echo $OUTPUT->footer();
  * @param string $type The type of custom field (profile, course, cohort).
  * @return string The HTML link for exporting the field.
  */
-function print_export_link(int $categoryid, int $fieldid, string $type): string {
+function tool_customfields_exportimport_print_export_link(int $categoryid, int $fieldid, string $type): string {
     $exporturl = new moodle_url('/admin/tool/customfields_exportimport/process_export.php', ['fieldid' => $fieldid,'categoryid' => $categoryid,'type' => $type]);
     return html_writer::link($exporturl, get_string('export', 'tool_customfields_exportimport'), [
            'class' => 'btn btn-sm btn-primary'
@@ -88,9 +88,9 @@ function print_export_link(int $categoryid, int $fieldid, string $type): string 
  *
  * @return void
  */
-function display_cohort_fields(): void {
+function tool_customfields_exportimport_display_cohort_fields(): void {
 
-    $categories = get_cohort_customfields_categories();
+    $categories = tool_customfields_exportimport_get_cohort_customfields_categories();
     foreach ($categories as $category) {
         $categoryname = format_string($category->name);
         $exportcategoryurl = new moodle_url('/admin/tool/customfields_exportimport/process_export.php', ['categoryid' => $category->id,'type' => 'cohort']);
@@ -107,7 +107,7 @@ function display_cohort_fields(): void {
         $table->data = [];
 
         foreach ($category->fields as $field) {
-            $actionbtn = print_export_link($category->id, $field->id, 'cohort');
+            $actionbtn = tool_customfields_exportimport_print_export_link($category->id, $field->id, 'cohort');
 
             $table->data[] = [
                     format_string($field->name),
@@ -127,7 +127,7 @@ function display_cohort_fields(): void {
  *
  * @return array List of cohort custom field categories, each with its fields.
  */
-function get_cohort_customfields_categories(): array {
+function tool_customfields_exportimport_get_cohort_customfields_categories(): array {
     global $DB;
 
     $categories = $DB->get_records('customfield_category', ['component' => 'core_cohort'], 'sortorder');
@@ -146,9 +146,9 @@ function get_cohort_customfields_categories(): array {
  *
  * @return void
  */
-function display_course_fields(): void {
+function tool_customfields_exportimport_display_course_fields(): void {
 
-    $categories = get_course_customfields_categories();
+    $categories = tool_customfields_exportimport_get_course_customfields_categories();
     foreach ($categories as $category) {
         $categoryname = format_string($category->name);
         $exportcategoryurl = new moodle_url('/admin/tool/customfields_exportimport/process_export.php', ['categoryid' => $category->id,'type' => 'course']);
@@ -166,7 +166,7 @@ function display_course_fields(): void {
         $table->data = [];
 
         foreach ($category->fields as $field) {
-            $actionbtn = print_export_link($category->id, $field->id, 'course');
+            $actionbtn = tool_customfields_exportimport_print_export_link($category->id, $field->id, 'course');
 
             $table->data[] = [
                     format_string($field->name),
@@ -186,9 +186,9 @@ function display_course_fields(): void {
  *
  * @return void
  */
-function display_profile_fields(): void {
+function tool_customfields_exportimport_display_profile_fields(): void {
 
-    $categories = get_user_info_categories();
+    $categories = tool_customfields_exportimport_get_user_info_categories();
 
     foreach ($categories as $category) {
         $categoryname = format_string($category->name);
@@ -217,7 +217,7 @@ function display_profile_fields(): void {
             $required = $field->required ? get_string('yes') : get_string('no');
             $description = format_text($field->description ?? '', $field->descriptionformat ?? FORMAT_HTML);
 
-            $actionbtn = print_export_link($category->id, $field->id, 'profile');
+            $actionbtn = tool_customfields_exportimport_print_export_link($category->id, $field->id, 'profile');
 
             $table->data[] = [
                     format_string($field->name),
@@ -237,7 +237,7 @@ function display_profile_fields(): void {
  *
  * @return array List of course custom field categories, each with its fields.
  */
-function get_course_customfields_categories(): array {
+function tool_customfields_exportimport_get_course_customfields_categories(): array {
     global $DB;
 
     $categories = $DB->get_records('customfield_category', ['component' => 'core_course'], 'sortorder');
@@ -254,7 +254,7 @@ function get_course_customfields_categories(): array {
  *
  * @return array List of user info categories, each with its fields.
  */
-function get_user_info_categories(): array {
+function tool_customfields_exportimport_get_user_info_categories(): array {
     global $DB;
     $categories = $DB->get_records('user_info_category',null,'sortorder');
     foreach ($categories as $category) {
