@@ -62,9 +62,7 @@ if (!$data || !isset($data['type'])) {
     cli_error(get_string('cli_import_invalidjson', 'tool_customfields_exportimport'));
 }
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/import/field_importer.php');
-
-use tool_customfields_exportimport\import\field_importer;
+use tool_customfields_exportimport\local\import\field_importer;
 
 try {
     $importer = field_importer::make($data['type']);

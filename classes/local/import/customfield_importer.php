@@ -1,10 +1,32 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace tool_customfields_exportimport\import;
+namespace tool_customfields_exportimport\local\import;
 
-use stdClass;
 use moodle_exception;
+use stdClass;
 
+/**
+ * customfield_importer class
+ *
+ * @package    tool_customfields_exportimport
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class customfield_importer implements importer_field_interface {
 
     private string $component;
@@ -35,8 +57,8 @@ class customfield_importer implements importer_field_interface {
         }
 
         $category = new stdClass();
-        $category->name = $data['category']['name'];
-        $category->sortorder = $data['category']['sortorder'] ?? 0;
+        $category->name = clean_param($data['category']['name'], PARAM_TEXT);
+        $category->sortorder = clean_param($data['category']['sortorder'] ?? 0, PARAM_INT);
         $category->component = $this->component;
         $category->area = $this->area;
         $category->timecreated = time();
@@ -66,13 +88,13 @@ class customfield_importer implements importer_field_interface {
             }
 
             $fieldobj = new stdClass();
-            $fieldobj->categoryid = $categoryid;
-            $fieldobj->shortname = $field['shortname'];
-            $fieldobj->name = $field['name'];
-            $fieldobj->type = $field['type'];
-            $fieldobj->description = $field['description'];
-            $fieldobj->descriptionformat = $field['descriptionformat'];
-            $fieldobj->sortorder = $field['sortorder'] ?? 0;
+            $fieldobj->categoryid = clean_param($categoryid, PARAM_INT);
+            $fieldobj->shortname = clean_param($field['shortname'], PARAM_ALPHANUMEXT);
+            $fieldobj->name = clean_param($field['name'], PARAM_TEXT);
+            $fieldobj->type = clean_param($field['type'], PARAM_ALPHANUMEXT);
+            $fieldobj->description = clean_param($field['description'], PARAM_CLEANHTML);
+            $fieldobj->descriptionformat = clean_param($field['descriptionformat'], PARAM_INT);
+            $fieldobj->sortorder = clean_param($field['sortorder'] ?? 0, PARAM_INT);
             $fieldobj->timecreated = time();
             $fieldobj->timemodified = time();
 

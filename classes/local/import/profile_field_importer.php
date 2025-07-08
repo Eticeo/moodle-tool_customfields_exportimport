@@ -14,20 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace tool_customfields_exportimport\import;
+namespace tool_customfields_exportimport\local\import;
 
 use moodle_exception;
 use stdClass;
 
 /**
- * CLI customfields_exportimport export tool.
+ * Interface for importing custom field data.
  *
  * @package    tool_customfields_exportimport
  * @copyright 2025 Eticeo https://eticeo.com
  * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class profile_field_importer implements importer_field_interface {
 
     private function category_name_exist(string $name): bool {

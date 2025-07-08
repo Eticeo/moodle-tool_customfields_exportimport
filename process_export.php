@@ -27,12 +27,7 @@ require_once('../../../config.php');
 global $OUTPUT, $PAGE,$SITE,$CFG;
 require_once($CFG->libdir.'/accesslib.php');
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/exporter_field_interface.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/profile_field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/customfield_exporter.php');
-
-use tool_customfields_exportimport\export\field_exporter;
+use tool_customfields_exportimport\local\export\field_exporter;
 
 require_capability('moodle/site:config', context_system::instance());
 

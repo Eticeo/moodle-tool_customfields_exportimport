@@ -30,11 +30,7 @@ global $OUTPUT, $PAGE,$SITE,$CFG, $USER;
 require_once($CFG->libdir.'/accesslib.php');
 require_once(__DIR__ . '/import_form.php');
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/import/field_importer.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/import/importer_field_interface.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/import/customfield_importer.php');
-
-use tool_customfields_exportimport\import\field_importer;
+use tool_customfields_exportimport\local\import\field_importer;
 
 global $DB;
 

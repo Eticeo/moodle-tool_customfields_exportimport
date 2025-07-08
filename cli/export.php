@@ -63,11 +63,7 @@ $categoryid = (int) $options['categoryid'];
 $fieldid = isset($options['fieldid']) ? (int) $options['fieldid'] : null;
 $destination = $options['destination'] ?? '.';
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/customfield_exporter.php');
-
-use tool_customfields_exportimport\export\field_exporter;
-
+use tool_customfields_exportimport\local\export\field_exporter;
 
 $exporter = field_exporter::make($type);
 $data = $exporter->export($categoryid, $fieldid);

@@ -14,28 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace tool_customfields_exportimport\import;
+namespace tool_customfields_exportimport\local\export;
 
 /**
- * field_importer class for importing custom field data.
+ * Interface for exporting custom field data.
  *
  * @package    tool_customfields_exportimport
  * @copyright 2025 Eticeo https://eticeo.com
  * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class field_importer {
+interface exporter_field_interface {
 
-    public static function make(string $type): importer_field_interface {
-        switch ($type) {
-            case 'profile':
-                return new profile_field_importer();
-            case 'course':
-                return new customfield_importer('core_course', 'course');
-            case 'cohort':
-                return new customfield_importer('core_cohort', 'cohort');
-            default:
-                throw new \moodle_exception('invalidtype', 'tool_customfields_exportimport');
-        }
-    }
+    /**
+     * Exports the custom field data for a given category and optional fieldid passed
+     *
+     * @param int $categoryid
+     * @param int|null $fieldid
+     * @return array exported data in json format
+     */
+    public function export(int $categoryid, ?int $fieldid = null): array;
 }
