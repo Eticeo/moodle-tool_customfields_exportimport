@@ -270,7 +270,5 @@ function tool_customfields_exportimport_get_user_info_categories(): array {
 }
 
 
-echo $OUTPUT->footer();
-
 
 
