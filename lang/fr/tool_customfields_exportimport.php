@@ -32,6 +32,7 @@ $string['type'] = 'Type de donnée';
 $string['required'] = 'Obligatoire';
 $string['actions'] = 'Actions';
 $string['export'] = 'Exporter';
+$string['import'] = 'Importer';
 $string['category'] = 'Catégorie';
 $string['cohortfields'] = 'Champs de cohorte';
 $string['exportcategory'] = 'Exporter la catégorie';
@@ -48,6 +49,17 @@ $string['fieldname'] = 'Nom';
 $string['type'] = 'Type';
 $string['description'] = 'Description';
 $string['actions'] = 'Actions';
+$string['invalidjsonstructure'] = 'Le fichier JSON importé n\'a pas la structure attendue.';
+$string['categoryalreadyexists'] = 'Une catégorie portant le nom "{$a}" existe déjà.';
+$string['shortnamealreadyexists'] = 'Un champ personnalisé avec le shortname "{$a}" existe déjà.';
+$string['invalidtype'] = 'Type de champ personnalisé invalide trouvé dans l\'import.';
+$string['categorynameexists'] = 'Une catégorie portant le nom "{$a}" existe déjà.';
+$string['insertcategoryfailed'] = 'Échec lors de la création de la nouvelle catégorie de champ personnalisé.';
+$string['fieldshortnameexists'] = 'Un champ avec le shortname "{$a}" existe déjà dans cette catégorie.';
+$string['invalidfiletype'] = 'Le fichier envoyé doit être un fichier JSON valide.';
+$string['invalidtab'] = 'Onglet sélectionné invalide.';
+$string['invalidjson'] = 'Le fichier JSON envoyé est invalide ou incomplet.';
+
 
 // Cli
 $string['clihelp'] = 'Exporte les champs personnalisés ou les champs du profil utilisateur (au format JSON).

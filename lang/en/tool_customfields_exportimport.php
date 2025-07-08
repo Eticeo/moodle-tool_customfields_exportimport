@@ -32,6 +32,7 @@ $string['type'] = 'Data type';
 $string['required'] = 'Required';
 $string['actions'] = 'Actions';
 $string['export'] = 'Export';
+$string['import'] = 'Import';
 $string['category'] = 'Category';
 $string['cohortfields'] = 'Cohort fields';
 $string['exportcategory'] = 'Export category';
@@ -48,6 +49,17 @@ $string['fieldname'] = 'Name';
 $string['type'] = 'Type';
 $string['description'] = 'Description';
 $string['actions'] = 'Actions';
+$string['invalidjsonstructure'] = 'The uploaded JSON file does not have the expected structure.';
+$string['categoryalreadyexists'] = 'A category with the name "{$a}" already exists.';
+$string['shortnamealreadyexists'] = 'A custom field with the shortname "{$a}" already exists.';
+$string['invalidtype'] = 'Invalid custom field type found in the import.';
+$string['categorynameexists'] = 'A category with the name "{$a}" already exists.';
+$string['insertcategoryfailed'] = 'Failed to create the new custom field category.';
+$string['fieldshortnameexists'] = 'A field with the shortname "{$a}" already exists in this category.';
+$string['invalidfiletype'] = 'The uploaded file must be a valid JSON file.';
+$string['invalidjson'] = 'The uploaded JSON file is invalid or incomplete.';
+$string['invalidtab'] = 'Invalid tab selected.';
+
 
 // CLI
 $string['clihelp'] = 'Export customfields or user profile fields (JSON format).

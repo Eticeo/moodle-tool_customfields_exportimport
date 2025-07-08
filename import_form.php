@@ -39,7 +39,7 @@ class customfields_import_form extends moodleform {
         $mform->addElement('filepicker', 'import_file', get_string('file'), null, array('accepted_types' => array('.json')));
         $mform->addRule('import_file', null, 'required');
 
-        $this->add_action_buttons(false, get_string('import', 'tool_profiling'));
+        $this->add_action_buttons(false, get_string('import', 'tool_customfields_exportimport'));
     }
 
 }

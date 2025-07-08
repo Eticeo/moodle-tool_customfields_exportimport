@@ -89,7 +89,7 @@ if ($mform->get_data()) {
 
 } else {
     echo $OUTPUT->header();
-    echo $OUTPUT->heading(get_string('import', 'tool_profiling'));
+    echo $OUTPUT->heading(get_string('import', 'tool_customfields_exportimport'));
     $mform->display();
     echo $OUTPUT->footer();
     die;
