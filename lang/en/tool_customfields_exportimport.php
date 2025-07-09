@@ -59,6 +59,7 @@ $string['fieldshortnameexists'] = 'A field with the shortname "{$a}" already exi
 $string['invalidfiletype'] = 'The uploaded file must be a valid JSON file.';
 $string['invalidjson'] = 'The uploaded JSON file is invalid or incomplete.';
 $string['invalidtab'] = 'Invalid tab selected.';
+$string['privacy:metadata'] = 'The Custom Fields Export/Import tool does not store any personal data.';
 
 
 // CLI

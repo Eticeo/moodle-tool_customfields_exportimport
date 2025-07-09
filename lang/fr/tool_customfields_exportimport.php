@@ -59,6 +59,7 @@ $string['fieldshortnameexists'] = 'Un champ avec le shortname "{$a}" existe déj
 $string['invalidfiletype'] = 'Le fichier envoyé doit être un fichier JSON valide.';
 $string['invalidtab'] = 'Onglet sélectionné invalide.';
 $string['invalidjson'] = 'Le fichier JSON envoyé est invalide ou incomplet.';
+$string['privacy:metadata'] = 'Le plugin d’export/import des champs personnalisés ne stocke aucune donnée personnelle.';
 
 
 // Cli
