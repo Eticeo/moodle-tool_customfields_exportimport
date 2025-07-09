@@ -49,12 +49,12 @@ class profile_field_importer implements importer_field_interface {
         }
 
         if($this->category_name_exist($data['category']['name'])) {
-            throw new moodle_exception('categorynameexists', 'tool_customfields_exportimport', '', $data['category']['name']);
+            throw new moodle_exception('categorynameexists', 'tool_customfields_exportimport');
         }
 
 
         $category = new stdClass();
-        $category->name = $data['category']['name'];
+        $category->name = clean_param($data['category']['name'], PARAM_TEXT);
         require_once($CFG->dirroot.'/user/profile/definelib.php');
         profile_save_category($category);
 
@@ -67,29 +67,29 @@ class profile_field_importer implements importer_field_interface {
         foreach ($data['fields'] as $field) {
 
             if($this->field_shortname_exist($field['shortname'], $category->id)) {
-                throw new moodle_exception('fieldshortnameexists', 'tool_customfields_exportimport', '', $field['shortname']);
+                throw new moodle_exception('fieldshortnameexists', 'tool_customfields_exportimport');
             }
 
 
             $fieldobj = new stdClass();
             $fieldobj->categoryid = $category->id;
-            $fieldobj->shortname = $field['shortname'];
-            $fieldobj->name = $field['name'];
-            $fieldobj->datatype = $field['datatype'];
-            $fieldobj->description = $field['description'];
-            $fieldobj->descriptionformat = $field['descriptionformat'];
-            $fieldobj->required = (int)$field['required'];
-            $fieldobj->locked = (int)$field['locked'];
-            $fieldobj->visible = (int)$field['visible'];
-            $fieldobj->forceunique = (int)$field['forceunique'];
-            $fieldobj->signup = (int)$field['signup'];
-            $fieldobj->defaultdata = $field['defaultdata'];
-            $fieldobj->defaultdataformat = $field['defaultdataformat'];
-            $fieldobj->param1 = $field['param1'];
-            $fieldobj->param2 = $field['param2'];
-            $fieldobj->param3 = $field['param3'];
-            $fieldobj->param4 = $field['param4'];
-            $fieldobj->param5 = $field['param5'];
+            $fieldobj->shortname = clean_param($field['shortname'], PARAM_ALPHANUMEXT);
+            $fieldobj->name = clean_param($field['name'], PARAM_TEXT);
+            $fieldobj->datatype = clean_param($field['datatype'], PARAM_ALPHANUMEXT);
+            $fieldobj->description = clean_param($field['description'] ?? '', PARAM_CLEANHTML);
+            $fieldobj->descriptionformat = clean_param($field['descriptionformat'], PARAM_INT);
+            $fieldobj->required = clean_param($field['required'], PARAM_INT);
+            $fieldobj->locked = clean_param($field['locked'], PARAM_INT);
+            $fieldobj->visible = clean_param($field['visible'], PARAM_INT);
+            $fieldobj->forceunique = clean_param($field['forceunique'], PARAM_INT);
+            $fieldobj->signup = clean_param($field['signup'], PARAM_INT);
+            $fieldobj->defaultdata = clean_param($field['defaultdata'] ?? '', PARAM_TEXT);
+            $fieldobj->defaultdataformat = clean_param($field['defaultdataformat'], PARAM_INT);
+            $fieldobj->param1 = clean_param($field['param1'] ?? '', PARAM_TEXT);
+            $fieldobj->param2 = clean_param($field['param2'] ?? '', PARAM_TEXT);
+            $fieldobj->param3 = clean_param($field['param3'] ?? '', PARAM_TEXT);
+            $fieldobj->param4 = clean_param($field['param4'] ?? '', PARAM_TEXT);
+            $fieldobj->param5 = clean_param($field['param5'] ?? '', PARAM_TEXT);
 
             $editors = [];
 
@@ -113,9 +113,8 @@ class profile_field_importer implements importer_field_interface {
 
             $defineclass = 'profile_define_' . $fieldobj->datatype;
             if (!class_exists($defineclass)) {
-                debugging("Classe {$defineclass} introuvable", DEBUG_DEVELOPER);
+                throw new moodle_exception('invalidtype', 'tool_customfields_exportimport');
             }
-
 
             profile_save_field($fieldobj,$editors);
         }

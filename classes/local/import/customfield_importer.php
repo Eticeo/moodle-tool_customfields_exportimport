@@ -66,12 +66,7 @@ class customfield_importer implements importer_field_interface {
         $category->itemid = 0;
 
         if($this->customfield_category_exists($category->name)) {
-            throw new moodle_exception(
-                    'categoryalreadyexists',
-                    'tool_customfields_exportimport',
-                    '',
-                    $category->name
-            );
+            throw new moodle_exception('categoryalreadyexists','tool_customfields_exportimport');
         }
 
         $categoryid = $DB->insert_record('customfield_category', $category);
