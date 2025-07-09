@@ -16,6 +16,9 @@
 
 namespace tool_customfields_exportimport\local\export;
 
+use dml_exception;
+use stdClass;
+
 /**
  * customfield_exporter class
  *
@@ -26,22 +29,51 @@ namespace tool_customfields_exportimport\local\export;
  */
 class customfield_exporter implements exporter_field_interface {
 
+
+    /**
+     * The component name (e\.g\., 'core_course', 'core_cohort') for which custom fields are exported\.
+     *
+     * @var string
+     */
     private string $component;
 
     public function __construct(string $component) {
         $this->component = $component;
     }
 
-    private function get_customfield_field(int $fieldid, int $categoryid) {
+    /**
+     * Retrieves a single custom field by its ID and category.
+     *
+     * @param int $fieldid The ID of the custom field.
+     * @param int $categoryid The ID of the category the field belongs to.
+     * @return stdClass The custom field record.
+     * @throws dml_exception If the field does not exist.
+     */
+    private function get_customfield_field(int $fieldid, int $categoryid): stdClass {
         global $DB;
         return $DB->get_record('customfield_field', ['id' => $fieldid, 'categoryid' => $categoryid], '*', MUST_EXIST);
     }
 
+    /**
+     * Get all custom fields for a given category.
+     *
+     * @param int $categoryid The ID of the category.
+     * @return array List of custom field records.
+     * @throws dml_exception
+     */
     private function get_customfield_fields_by_category(int $categoryid): array {
         global $DB;
         return $DB->get_records('customfield_field', ['categoryid' => $categoryid], 'sortorder');
     }
 
+    /**
+     * Exports custom field data for a category or a specific field.
+     *
+     * @param int $categoryid The ID of the category.
+     * @param int|null $fieldid Optional. The ID of a specific field to export. If null, exports all fields in the category.
+     * @return array The exported data.
+     * @throws dml_exception If the category or field does not exist.
+     */
     public function export(int $categoryid, ?int $fieldid = null): array {
         global $DB;
 

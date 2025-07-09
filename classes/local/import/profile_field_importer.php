@@ -20,7 +20,10 @@ use moodle_exception;
 use stdClass;
 
 /**
- * Interface for importing custom field data.
+ * Importer for user profile fields.
+ *
+ * Implements the import of custom user profile fields (user_info_category and user_info_field)
+ * from a decoded JSON array structure.
  *
  * @package    tool_customfields_exportimport
  * @copyright 2025 Eticeo https://eticeo.com
@@ -29,17 +32,36 @@ use stdClass;
  */
 class profile_field_importer implements importer_field_interface {
 
+    /**
+     * Checks if a user_info_category with the given name already exists.
+     *
+     * @param string $name The category name to check.
+     * @return bool True if the category exists, false otherwise.
+     */
     private function category_name_exist(string $name): bool {
         global $DB;
         return $DB->record_exists('user_info_category', ['name' => $name]);
     }
 
+    /**
+     * Checks if a user_info_field with the given shortname exists in the specified category.
+     *
+     * @param string $shortname The field shortname to check.
+     * @param int $categoryid The category ID to check within.
+     * @return bool True if the field exists, false otherwise.
+     */
     private function field_shortname_exist(string $shortname, int $categoryid): bool {
         global $DB;
         return $DB->record_exists('user_info_field', ['shortname' => $shortname, 'categoryid' => $categoryid]);
     }
 
 
+    /**
+     * Imports profile fields from an array of data.
+     *
+     * @param array $data The imported data, decoded from JSON. Must contain 'category' and 'fields'.
+     * @return void
+     */
     public function import(array $data): void {
 
         global $CFG;

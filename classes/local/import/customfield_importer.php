@@ -16,6 +16,8 @@
 
 namespace tool_customfields_exportimport\local\import;
 
+use coding_exception;
+use dml_exception;
 use moodle_exception;
 use stdClass;
 
@@ -29,7 +31,18 @@ use stdClass;
  */
 class customfield_importer implements importer_field_interface {
 
+    /**
+     * The component name (e.g., 'core_course', 'core_cohort') for which custom fields are imported.
+     *
+     * @var string
+     */
     private string $component;
+
+    /**
+     * The area name (e.g., 'course', 'cohort') for which custom fields are imported.
+     *
+     * @var string
+     */
     private string $area;
 
     public function __construct(string $component, string $area) {
@@ -37,18 +50,38 @@ class customfield_importer implements importer_field_interface {
         $this->area = $area;
     }
 
+    /**
+     * Checks if a custom field with the given shortname exists for the current component and area.
+     *
+     * @param string $shortname The shortname of the custom field to check.
+     * @return bool True if the custom field exists, false otherwise.
+     * @throws dml_exception
+     */
     private function customfield_shortname_exists(string $shortname): bool {
         global $DB;
         return $DB->record_exists('customfield_field', ['shortname' => $shortname, 'component' => $this->component, 'area' => $this->area]);
     }
 
+    /**
+     * Checks if a custom field category with the given name exists for the current component and area.
+     *
+     * @param string $name The name of the custom field category to check.
+     * @return bool True if the category exists, false otherwise.
+     * @throws dml_exception
+     */
     private function customfield_category_exists(string $name): bool {
         global $DB;
         return $DB->record_exists('customfield_category', ['name' => $name, 'component' => $this->component, 'area' => $this->area]);
     }
 
 
-
+    /**
+     * Imports custom field categories and fields from an array of data.
+     *
+     * @param array $data The imported data, decoded from JSON. Must contain 'category' and 'fields'.
+     * @return void
+     * @throws moodle_exception|coding_exception If the data structure is invalid or a duplicate is found.
+     */
     public function import(array $data): void {
         global $DB;
 

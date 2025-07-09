@@ -16,6 +16,8 @@
 
 namespace tool_customfields_exportimport\local\export;
 
+use moodle_exception;
+
 /**
  * field_exporter class
  *
@@ -26,6 +28,13 @@ namespace tool_customfields_exportimport\local\export;
  */
 class field_exporter {
 
+    /**
+     * Factory method to create an exporter_field_interface implementation based on type.
+     *
+     * @param string $type The type of exporter to create ('profile', 'course', 'cohort').
+     * @return exporter_field_interface
+     * @throws moodle_exception If the type is invalid.
+     */
     public static function make(string $type): exporter_field_interface {
         switch ($type) {
             case 'profile':
@@ -35,7 +44,7 @@ class field_exporter {
             case 'cohort':
                 return new customfield_exporter('core_cohort');
             default:
-                throw new \moodle_exception('invalidtype', 'tool_customfields_exportimport');
+                throw new moodle_exception('invalidtype', 'tool_customfields_exportimport');
         }
     }
 }

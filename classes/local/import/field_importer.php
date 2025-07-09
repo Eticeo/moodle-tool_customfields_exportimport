@@ -16,6 +16,8 @@
 
 namespace tool_customfields_exportimport\local\import;
 
+use moodle_exception;
+
 /**
  * field_importer class
  *
@@ -26,6 +28,13 @@ namespace tool_customfields_exportimport\local\import;
  */
 class field_importer {
 
+    /**
+     * Factory method to create an importer instance based on the field type.
+     *
+     * @param string $type The type of field to import ('profile', 'course', 'cohort').
+     * @return importer_field_interface The appropriate importer instance.
+     * @throws moodle_exception If the type is invalid.
+     */
     public static function make(string $type): importer_field_interface {
         switch ($type) {
             case 'profile':
@@ -35,7 +44,7 @@ class field_importer {
             case 'cohort':
                 return new customfield_importer('core_cohort', 'cohort');
             default:
-                throw new \moodle_exception('invalidtype', 'tool_customfields_exportimport');
+                throw new moodle_exception('invalidtype', 'tool_customfields_exportimport');
         }
     }
 }

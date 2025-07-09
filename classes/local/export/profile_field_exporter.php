@@ -16,6 +16,9 @@
 
 namespace tool_customfields_exportimport\local\export;
 
+use dml_exception;
+use stdClass;
+
 /**
  * profile_field_exporter class
  *
@@ -26,18 +29,40 @@ namespace tool_customfields_exportimport\local\export;
  */
 class profile_field_exporter implements exporter_field_interface {
 
+
+    /**
+     * get a user_info_field record by id.
+     *
+     * @param int $fieldid The id of the user_info_field.
+     * @return stdClass The user_info_field record.
+     * @throws dml_exception
+     */
     private function get_user_info_field_id(int $fieldid){
         global $DB;
-
         return $DB->get_record('user_info_field', ['id' => $fieldid], '*', MUST_EXIST);
     }
 
+    /**
+     * Get all user_info_field records for a given category, ordered by sortorder.
+     *
+     * @param int $categoryid The id of the user_info_category.
+     * @return array The list of user_info_field records.
+     * @throws dml_exception
+     */
     private function get_user_info_field_by_category(int $categoryid): array {
         global $DB;
-
         return $DB->get_records('user_info_field', ['categoryid' => $categoryid], 'sortorder');
     }
 
+
+    /**
+     * Exports user profile fields for a given category or a specific field.
+     *
+     * @param int $categoryid The ID of the user_info_category.
+     * @param int|null $fieldid Optional. The ID of a specific user_info_field to export. If null, exports all fields in the category.
+     * @return array The exported profile fields data.
+     * @throws dml_exception
+     */
     public function export(int $categoryid, ?int $fieldid = null): array {
         global $DB;
 
