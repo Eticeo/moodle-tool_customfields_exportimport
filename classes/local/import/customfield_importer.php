@@ -61,6 +61,7 @@ class customfield_importer implements importer_field_interface {
      * Checks if a custom field with the given shortname exists in the specifei
      *
      * @param string $shortname The shortname of the custom field to check.
+     * @param int $categoryid The ID of the category to check within.
      * @return bool True if the custom field exists, false otherwise.
      * @throws dml_exception
      */
