@@ -25,7 +25,6 @@
 
 define('CLI_SCRIPT', true);
 
-
 require(__DIR__ . '/../../../../config.php');
 require_once("$CFG->libdir/clilib.php");
 
@@ -40,7 +39,6 @@ list($options, $unrecognized) = cli_get_params(
         ]
 );
 
-// Affiche l'aide si nécessaire.
 if ($options['help'] || empty($options['file'])) {
     $help = get_string('clihelp_import', 'tool_customfields_exportimport', (object)[
             'help' => get_string('clihelp_import_help', 'tool_customfields_exportimport'),

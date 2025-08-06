@@ -70,10 +70,9 @@ class profile_field_importer implements importer_field_interface {
             throw new moodle_exception('invalidjsonstructure', 'tool_customfields_exportimport');
         }
 
-        if($this->category_name_exist($data['category']['name'])) {
-            throw new moodle_exception('categorynameexists', 'tool_customfields_exportimport');
+        if ($this->category_name_exist($data['category']['name'])) {
+            throw new moodle_exception('categorynameexists', 'tool_customfields_exportimport', null, $data['category']['name']);
         }
-
 
         $category = new stdClass();
         $category->name = clean_param($data['category']['name'], PARAM_TEXT);
@@ -84,14 +83,11 @@ class profile_field_importer implements importer_field_interface {
             throw new moodle_exception('insertcategoryfailed', 'tool_customfields_exportimport');
         }
 
-
-
         foreach ($data['fields'] as $field) {
 
-            if($this->field_shortname_exist($field['shortname'], $category->id)) {
-                throw new moodle_exception('fieldshortnameexists', 'tool_customfields_exportimport');
+            if ($this->field_shortname_exist($field['shortname'], $category->id)) {
+                throw new moodle_exception('fieldshortnameexists', 'tool_customfields_exportimport', null, $field['shortname']);
             }
-
 
             $fieldobj = new stdClass();
             $fieldobj->categoryid = $category->id;
@@ -132,13 +128,18 @@ class profile_field_importer implements importer_field_interface {
             ];
             $editors[] = 'defaultdata';
 
+            $definefile = $CFG->dirroot . '/user/profile/field/' . $fieldobj->datatype . '/define.class.php';
+
+            if (file_exists($definefile)) {
+                require_once($definefile);
+            }
 
             $defineclass = 'profile_define_' . $fieldobj->datatype;
             if (!class_exists($defineclass)) {
-                throw new moodle_exception('invalidtype', 'tool_customfields_exportimport');
+                throw new moodle_exception('invaliddatatype', 'tool_customfields_exportimport', '', $fieldobj->datatype);
             }
 
-            profile_save_field($fieldobj,$editors);
+            profile_save_field($fieldobj, $editors);
         }
 
     }

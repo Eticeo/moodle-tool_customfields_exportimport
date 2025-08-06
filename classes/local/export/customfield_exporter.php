@@ -37,6 +37,11 @@ class customfield_exporter implements exporter_field_interface {
      */
     private string $component;
 
+    /**
+     * Constructor.
+     *
+     * @param string $component The component name (e.g., 'core_course', 'core_cohort').
+     */
     public function __construct(string $component) {
         $this->component = $component;
     }
@@ -79,7 +84,7 @@ class customfield_exporter implements exporter_field_interface {
 
         $category = $DB->get_record('customfield_category', [
                 'id' => $categoryid,
-                'component' => $this->component
+                'component' => $this->component,
         ], '*', MUST_EXIST);
 
         $fields = $fieldid
@@ -103,12 +108,10 @@ class customfield_exporter implements exporter_field_interface {
                     'description' => $field->description,
                     'descriptionformat' => $field->descriptionformat,
                     'sortorder' => (int)$field->sortorder,
-                    'configdata' => $field->param1,
+                    'configdata' => $field->configdata,
             ];
         }
 
         return $export;
     }
-
-
 }

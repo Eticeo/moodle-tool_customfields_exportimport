@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-global $ADMIN, $DB, $USER,$CFG;
+global $ADMIN, $DB, $USER, $CFG;
 
 
 $ADMIN->add('tools', new admin_category('tool_customfields_exportimport',

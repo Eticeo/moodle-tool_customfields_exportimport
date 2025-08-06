@@ -25,8 +25,6 @@
 
 namespace tool_customfields_exportimport\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Privacy Subsystem implementation for tool_customfields_exportimport.

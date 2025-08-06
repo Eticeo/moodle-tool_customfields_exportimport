@@ -45,33 +45,32 @@ class customfield_importer implements importer_field_interface {
      */
     private string $area;
 
+
+    /**
+     * Constructor for the customfield_importer.
+     *
+     * @param string $component The component name (e.g., 'core_course').
+     * @param string $area The area name (e.g., 'course').
+     */
     public function __construct(string $component, string $area) {
         $this->component = $component;
         $this->area = $area;
     }
 
     /**
-     * Checks if a custom field with the given shortname exists for the current component and area.
+     * Checks if a custom field with the given shortname exists in the specifei
      *
      * @param string $shortname The shortname of the custom field to check.
      * @return bool True if the custom field exists, false otherwise.
      * @throws dml_exception
      */
-    private function customfield_shortname_exists(string $shortname): bool {
+    private function customfield_shortname_exists(string $shortname, int $categoryid): bool {
         global $DB;
-        return $DB->record_exists('customfield_field', ['shortname' => $shortname, 'component' => $this->component, 'area' => $this->area]);
-    }
-
-    /**
-     * Checks if a custom field category with the given name exists for the current component and area.
-     *
-     * @param string $name The name of the custom field category to check.
-     * @return bool True if the category exists, false otherwise.
-     * @throws dml_exception
-     */
-    private function customfield_category_exists(string $name): bool {
-        global $DB;
-        return $DB->record_exists('customfield_category', ['name' => $name, 'component' => $this->component, 'area' => $this->area]);
+        $sql = "SELECT cf.shortname
+                FROM {customfield_field} cf
+                WHERE cf.shortname = :shortname AND cf.categoryid = :categoryid ";
+        $params = ['shortname' => $shortname, 'categoryid' => $categoryid];
+        return $DB->record_exists_sql($sql, $params);
     }
 
 
@@ -98,19 +97,15 @@ class customfield_importer implements importer_field_interface {
         $category->timemodified = time();
         $category->itemid = 0;
 
-        if($this->customfield_category_exists($category->name)) {
-            throw new moodle_exception('categoryalreadyexists','tool_customfields_exportimport');
-        }
-
         $categoryid = $DB->insert_record('customfield_category', $category);
 
         foreach ($data['fields'] as $field) {
 
-            if ($this->customfield_shortname_exists($field['shortname'])) {
+            if ($this->customfield_shortname_exists($field['shortname'], $categoryid)) {
                 throw new moodle_exception(
                         'shortnamealreadyexists',
                         'tool_customfields_exportimport',
-                        '',
+                        null,
                         $field['shortname']
                 );
             }

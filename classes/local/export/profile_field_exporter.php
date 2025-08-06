@@ -37,7 +37,7 @@ class profile_field_exporter implements exporter_field_interface {
      * @return stdClass The user_info_field record.
      * @throws dml_exception
      */
-    private function get_user_info_field_id(int $fieldid){
+    private function get_user_info_field_id(int $fieldid) {
         global $DB;
         return $DB->get_record('user_info_field', ['id' => $fieldid], '*', MUST_EXIST);
     }
@@ -59,7 +59,8 @@ class profile_field_exporter implements exporter_field_interface {
      * Exports user profile fields for a given category or a specific field.
      *
      * @param int $categoryid The ID of the user_info_category.
-     * @param int|null $fieldid Optional. The ID of a specific user_info_field to export. If null, exports all fields in the category.
+     * @param int|null $fieldid Optional. The ID of a specific user_info_field to export.
+     * If null, exports all fields in the category.
      * @return array The exported profile fields data.
      * @throws dml_exception
      */

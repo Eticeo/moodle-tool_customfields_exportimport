@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 $plugin->component = 'tool_customfields_exportimport';
-$plugin->release   = '1.0.1';
-$plugin->version = 2025060201;
+$plugin->release   = '1.0.2';
+$plugin->version = 2025080600;
 $plugin->requires  = 2023042400;
 $plugin->maturity  = MATURITY_STABLE;

@@ -29,14 +29,31 @@ global $CFG;
 
 require_once($CFG->libdir . '/formslib.php');
 
+/**
+ * Form for importing custom fields from a JSON file.
+ *
+ * Provides a file picker for uploading a JSON file and an import button.
+ *
+ * @package    tool_customfields_exportimport
+ * @copyright  2025 Eticeo https://eticeo.com
+ * @author     2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class customfields_import_form extends moodleform {
 
-    public function definition () {
+    /**
+     * Defines the import form for custom fields.
+     *
+     * Adds a file picker for uploading a JSON file and an import button.
+     *
+     * @return void
+     */
+    public function definition() {
         $mform = $this->_form;
 
         $mform->addElement('header', 'settingsheader', get_string('upload'));
 
-        $mform->addElement('filepicker', 'import_file', get_string('file'), null, array('accepted_types' => array('.json')));
+        $mform->addElement('filepicker', 'import_file', get_string('file'), null, ['accepted_types' => ['.json']]);
         $mform->addRule('import_file', null, 'required');
 
         $this->add_action_buttons(false, get_string('import', 'tool_customfields_exportimport'));

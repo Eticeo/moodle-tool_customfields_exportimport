@@ -25,7 +25,7 @@
 
 require_once('../../../config.php');
 
-global $OUTPUT, $PAGE,$SITE,$CFG, $USER;
+global $OUTPUT, $PAGE, $SITE, $CFG, $USER;
 
 require_once($CFG->libdir.'/accesslib.php');
 require_once(__DIR__ . '/import_form.php');
@@ -34,7 +34,7 @@ use tool_customfields_exportimport\local\import\field_importer;
 
 global $DB;
 
-require_capability('moodle/site:config', context_system::instance());
+require_admin();
 
 $url = new moodle_url('/admin/tool/customfields_exportimport/index.php');
 
@@ -48,7 +48,7 @@ $PAGE->set_heading($heading);
 $mform = new customfields_import_form();
 
 
-// if the form is submitted and valid, process the import
+// If the form is submitted and valid, process the import.
 if ($mform->get_data()) {
 
     $draftitemid = file_get_submitted_draft_itemid('import_file');
@@ -59,12 +59,12 @@ if ($mform->get_data()) {
 
     $file = reset($files);
 
-    // Verif if file exists and has a size
+    // Verif if file exists and has a size.
     if (!$file || !$file->get_filesize()) {
         throw new moodle_exception('nofile', 'error');
     }
 
-    // verif json file
+    // Verif json file.
     if ($file->get_mimetype() !== 'application/json') {
         throw new moodle_exception('invalidfiletype', 'tool_customfields_exportimport');
     }
@@ -75,7 +75,7 @@ if ($mform->get_data()) {
         throw new moodle_exception('invalidjson', 'tool_customfields_exportimport');
     }
 
-    // process the import based on the type (cohort, course, profile)
+    // Process the import based on the type (cohort, course, profile).
     $importer = field_importer::make($importdata['type']);
 
     $importer->import($importdata);
