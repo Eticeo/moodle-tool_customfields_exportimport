@@ -17,29 +17,25 @@
 /**
  * process_export file for tool_customfields_exportimport
  *
- * @package   tool_customfields_exportimport
- * @copyright 2025 Serge Touvoli <serge.touvoli@eticeo.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    tool_customfields_exportimport
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once('../../../config.php');
-global $OUTPUT, $PAGE,$SITE,$CFG;
+global $OUTPUT, $PAGE, $SITE, $CFG;
 require_once($CFG->libdir.'/accesslib.php');
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/exporter_field_interface.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/profile_field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/customfield_exporter.php');
+use tool_customfields_exportimport\local\export\field_exporter;
 
-use tool_customfields_exportimport\export\field_exporter;
-
-require_capability('moodle/site:config', context_system::instance());
+require_admin();
 
 $type = required_param('type', PARAM_TEXT);
 $categoryid = required_param('categoryid', PARAM_INT);
 $fieldid = optional_param('fieldid', null, PARAM_INT);
 
-// process export based on the type (profile, course, cohort)
+// Process export based on the type (profile, course, cohort).
 $exporter = field_exporter::make($type);
 $export = $exporter->export($categoryid, $fieldid);
 

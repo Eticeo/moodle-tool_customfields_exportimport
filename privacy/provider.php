@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *  tool_customfield_exportimport settings
+ * Privacy Subsystem implementation for tool_customfields_exportimport.
  *
  * @package    tool_customfields_exportimport
  * @copyright 2025 Eticeo https://eticeo.com
@@ -23,26 +23,26 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-global $ADMIN, $DB, $USER, $CFG;
+namespace tool_customfields_exportimport\privacy;
 
 
-$ADMIN->add('tools', new admin_category('tool_customfields_exportimport',
-        get_string('pluginname', 'tool_customfields_exportimport')));
+/**
+ * Privacy Subsystem implementation for tool_customfields_exportimport.
+ *
+ * @package    tool_customfields_exportimport
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
 
-$ADMIN->add('tool_customfields_exportimport',
-        new admin_externalpage(
-                'tool_customfields_exportimport_home_page',
-                get_string('exportpage', 'tool_customfields_exportimport'),
-                "$CFG->wwwroot/admin/tool/customfields_exportimport/index.php"
-        )
-);
-
-$ADMIN->add('tool_customfields_exportimport',
-        new admin_externalpage(
-                'tool_customfields_exportimport_import_page',
-                get_string('importpage', 'tool_customfields_exportimport'),
-                "$CFG->wwwroot/admin/tool/customfields_exportimport/import.php"
-        )
-);
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}

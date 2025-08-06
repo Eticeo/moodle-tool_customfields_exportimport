@@ -18,12 +18,12 @@
  * CLI customfields_exportimport import tool.
  *
  * @package    tool_customfields_exportimport
- * @copyright 2025 Serge Touvoli <serge.touvoli@eticeo.com>
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 define('CLI_SCRIPT', true);
-
 
 require(__DIR__ . '/../../../../config.php');
 require_once("$CFG->libdir/clilib.php");
@@ -39,7 +39,6 @@ list($options, $unrecognized) = cli_get_params(
         ]
 );
 
-// Affiche l'aide si nécessaire.
 if ($options['help'] || empty($options['file'])) {
     $help = get_string('clihelp_import', 'tool_customfields_exportimport', (object)[
             'help' => get_string('clihelp_import_help', 'tool_customfields_exportimport'),
@@ -61,9 +60,7 @@ if (!$data || !isset($data['type'])) {
     cli_error(get_string('cli_import_invalidjson', 'tool_customfields_exportimport'));
 }
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/import/field_importer.php');
-
-use tool_customfields_exportimport\import\field_importer;
+use tool_customfields_exportimport\local\import\field_importer;
 
 try {
     $importer = field_importer::make($data['type']);

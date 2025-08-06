@@ -14,35 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace tool_customfields_exportimport\local\export;
+
+use moodle_exception;
+
 /**
- *  tool_customfield_exportimport settings
+ * field_exporter class
  *
  * @package    tool_customfields_exportimport
  * @copyright 2025 Eticeo https://eticeo.com
  * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+class field_exporter {
 
-defined('MOODLE_INTERNAL') || die();
-
-global $ADMIN, $DB, $USER, $CFG;
-
-
-$ADMIN->add('tools', new admin_category('tool_customfields_exportimport',
-        get_string('pluginname', 'tool_customfields_exportimport')));
-
-$ADMIN->add('tool_customfields_exportimport',
-        new admin_externalpage(
-                'tool_customfields_exportimport_home_page',
-                get_string('exportpage', 'tool_customfields_exportimport'),
-                "$CFG->wwwroot/admin/tool/customfields_exportimport/index.php"
-        )
-);
-
-$ADMIN->add('tool_customfields_exportimport',
-        new admin_externalpage(
-                'tool_customfields_exportimport_import_page',
-                get_string('importpage', 'tool_customfields_exportimport'),
-                "$CFG->wwwroot/admin/tool/customfields_exportimport/import.php"
-        )
-);
+    /**
+     * Factory method to create an exporter_field_interface implementation based on type.
+     *
+     * @param string $type The type of exporter to create ('profile', 'course', 'cohort').
+     * @return exporter_field_interface
+     * @throws moodle_exception If the type is invalid.
+     */
+    public static function make(string $type): exporter_field_interface {
+        switch ($type) {
+            case 'profile':
+                return new profile_field_exporter();
+            case 'course':
+                return new customfield_exporter('core_course');
+            case 'cohort':
+                return new customfield_exporter('core_cohort');
+            default:
+                throw new moodle_exception('invalidtype', 'tool_customfields_exportimport');
+        }
+    }
+}

@@ -17,34 +17,22 @@
 /**
  * English strings for customfields_exportimport
  *
- * @package   tool_customfields_exportimport
- * @copyright 2025 Serge Touvoli <serge.touvoli@eticeo.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    tool_customfields_exportimport
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Title
-$string['plugintitle'] = 'Custom Fields Import/Export';
-$string['pluginname'] = 'Custom Fields Import/Export';
-$string['field'] = 'Field name';
-$string['description'] = 'Description';
-$string['type'] = 'Data type';
-$string['required'] = 'Required';
 $string['actions'] = 'Actions';
-$string['export'] = 'Export';
 $string['category'] = 'Category';
-$string['cohortfields'] = 'Cohort fields';
-$string['exportcategory'] = 'Export category';
-$string['importsuccess'] = 'Import successful';
-$string['profilefields'] = 'Profile fields';
-$string['coursefields'] = 'Course fields';
-$string['exportpage'] = 'Export custom fields';
-$string['importpage'] = 'Import custom fields';
-$string['settingspage'] = 'Settings page';
-$string['settingsinfo'] = 'No settings available for now.';
-$string['export_title'] = 'Export Custom Fields';
-
-
-// CLI
+$string['categoryalreadyexists'] = 'A category with the name "{$a}" already exists.';
+$string['categorynameexists'] = 'A category with the name "{$a}" already exists.';
+$string['cli_export_failed'] = 'Failed to write to file: {$a}';
+$string['cli_export_success'] = 'Export successful: {$a}';
+$string['cli_import_failed'] = 'Import failed: {$a}';
+$string['cli_import_invalidfile'] = 'Error: Cannot read file at {$a}';
+$string['cli_import_invalidjson'] = 'Invalid or missing "type" in JSON data.';
+$string['cli_import_success'] = 'Import successful for type: {$a}';
 $string['clihelp'] = 'Export customfields or user profile fields (JSON format).
 
 Options:
@@ -57,17 +45,10 @@ Options:
 Example:
 \$php export.php --type=profile --categoryid=1
 \$php export.php --type=course --categoryid=2 --fieldid=5';
-$string['clihelp_help'] = 'Show this help.';
-$string['clihelp_type'] = 'Type of field: profile, course, cohort.';
 $string['clihelp_categoryid'] = 'ID of the category to export.';
-$string['clihelp_fieldid'] = '(Optional) ID of a single field to export.';
 $string['clihelp_destination'] = '(Optional) Destination directory to save JSON file (default: current directory).';
-
-$string['cli_export_success'] = 'Export successful: {$a}';
-$string['cli_export_failed'] = 'Failed to write to file: {$a}';
-
-
-// Cli Import
+$string['clihelp_fieldid'] = '(Optional) ID of a single field to export.';
+$string['clihelp_help'] = 'Show this help.';
 $string['clihelp_import'] = 'Import customfields or profile fields from a JSON file.
 
 Options:
@@ -76,11 +57,37 @@ Options:
 
 Example:
 $php import.php --file=/path/to/fields.json';
-$string['clihelp_import_help'] = 'Show this help.';
 $string['clihelp_import_file'] = 'Path to the JSON file to import.';
-
-$string['cli_import_success'] = 'Import successful for type: {$a}';
-$string['cli_import_failed'] = '❌ Import failed: {$a}';
-$string['cli_import_invalidfile'] = 'Error: Cannot read file at {$a}';
-$string['cli_import_invalidjson'] = 'Invalid or missing "type" in JSON data.';
+$string['clihelp_import_help'] = 'Show this help.';
+$string['clihelp_type'] = 'Type of field: profile, course, cohort.';
+$string['cohortfields'] = 'Cohort fields';
+$string['coursefields'] = 'Course fields';
+$string['description'] = 'Description';
+$string['export'] = 'Export';
+$string['export_title'] = 'Export Custom Fields';
+$string['exportcategory'] = 'Export category';
+$string['exportpage'] = 'Export custom fields';
+$string['field'] = 'Field name';
+$string['fieldname'] = 'Name';
+$string['fieldshortnameexists'] = 'A field with the shortname "{$a}" already exists in this category.';
+$string['import'] = 'Import';
+$string['importpage'] = 'Import custom fields';
+$string['importsuccess'] = 'Import successful';
+$string['insertcategoryfailed'] = 'Failed to create the new custom field category.';
+$string['invalidfiletype'] = 'The uploaded file must be a valid JSON file.';
+$string['invalidjson'] = 'The uploaded JSON file is invalid or incomplete.';
+$string['invalidjsonstructure'] = 'The uploaded JSON file does not have the expected structure.';
+$string['invalidtab'] = 'Invalid tab selected.';
+$string['invalidtype'] = 'Invalid custom field type found in the import.';
+$string['pluginname'] = 'Custom Fields Import/Export';
+$string['plugintitle'] = 'Custom Fields Import/Export';
+$string['privacy:metadata'] = 'The Custom Fields Export/Import tool does not store any personal data.';
+$string['profilefields'] = 'Profile fields';
+$string['required'] = 'Required';
+$string['settingsinfo'] = 'No settings available for now.';
+$string['settingspage'] = 'Settings page';
+$string['shortnamealreadyexists'] = 'A custom field with the shortname "{$a}" already exists.';
+$string['type'] = 'Data type';
+$string['invaliddatatype'] = 'Data type found in the import is invalid.';
+$string['typefortable'] = 'Type';
 

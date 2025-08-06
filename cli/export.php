@@ -18,11 +18,10 @@
  * CLI customfields_exportimport export tool.
  *
  * @package    tool_customfields_exportimport
- * @copyright 2025 Serge Touvoli <serge.touvoli@eticeo.com>
+ * @copyright 2025 Eticeo https://eticeo.com
+ * @author    2025 Serge Touvoli (serge.touvoli@eticeo.fr)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-global $CFG;
 
 define('CLI_SCRIPT', true);
 
@@ -62,11 +61,7 @@ $categoryid = (int) $options['categoryid'];
 $fieldid = isset($options['fieldid']) ? (int) $options['fieldid'] : null;
 $destination = $options['destination'] ?? '.';
 
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/field_exporter.php');
-require_once($CFG->dirroot . '/admin/tool/customfields_exportimport/classes/export/customfield_exporter.php');
-
-use tool_customfields_exportimport\export\field_exporter;
-
+use tool_customfields_exportimport\local\export\field_exporter;
 
 $exporter = field_exporter::make($type);
 $data = $exporter->export($categoryid, $fieldid);
