@@ -88,6 +88,18 @@ $string['settingsinfo'] = 'No settings available for now.';
 $string['settingspage'] = 'Settings page';
 $string['shortnamealreadyexists'] = 'A custom field with the shortname "{$a}" already exists.';
 $string['type'] = 'Data type';
-$string['invaliddatatype'] = 'Data type found in the import is invalid.';
+$string['invaliddatatype'] = 'Invalid data type for field "{$a}". This field type may not be installed or supported in this Moodle installation. Available types: text, textarea, checkbox, menu, date, datetime.';
 $string['typefortable'] = 'Type';
+
+// Migration-related strings
+$string['migration_applied'] = 'Migration applied successfully';
+$string['migration_failed'] = 'Migration failed';
+$string['migration_skipped'] = 'Migration skipped (already applied)';
+$string['migration_new'] = 'New migration';
+$string['migration_modified'] = 'Modified migration';
+$string['filenotfound'] = 'File not found: {$a}';
+$string['invalidjson'] = 'Invalid JSON in file: {$a}';
+$string['missingtype'] = 'Missing "type" field in JSON file: {$a}';
+$string['categoryduplicate'] = 'Category "{$a}" already exists, using existing category (idempotent import)';
+$string['fieldduplicate'] = 'Field "{$a}" already exists in category, skipping (idempotent import)';
 

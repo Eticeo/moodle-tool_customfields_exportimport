@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="admin/tool/customfields_exportimport/db" VERSION="20251028" COMMENT="XML database definitions for tool_customfields_exportimport">
+    <TABLES>
+        <TABLE NAME="tool_customfields_migrations" COMMENT="Tracks applied custom field migrations">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="Unique identifier"/>
+                <FIELD NAME="migration_name" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Migration filename (e.g., 20251027_export_profile_personalinfo.json)"/>
+                <FIELD NAME="migration_hash" TYPE="char" LENGTH="32" NOTNULL="true" COMMENT="MD5 hash of file contents for change detection"/>
+                <FIELD NAME="migration_type" TYPE="char" LENGTH="50" NOTNULL="true" COMMENT="Type of custom fields (profile, course, cohort)"/>
+                <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="applied" COMMENT="Migration status: pending, applied, failed"/>
+                <FIELD NAME="applied_at" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Timestamp when migration was applied"/>
+                <FIELD NAME="error_message" TYPE="text" NOTNULL="false" COMMENT="Error message if migration failed"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="migration_name" TYPE="unique" FIELDS="migration_name" COMMENT="Ensure each migration is tracked only once"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="status_idx" UNIQUE="false" FIELDS="status"/>
+                <INDEX NAME="applied_at_idx" UNIQUE="false" FIELDS="applied_at"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
