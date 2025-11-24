@@ -36,11 +36,12 @@ class profile_field_importer implements importer_field_interface {
      * Checks if a user_info_category with the given name already exists.
      *
      * @param string $name The category name to check.
-     * @return bool True if the category exists, false otherwise.
+     * @return int|false The category ID if it exists, false otherwise.
      */
-    private function category_name_exist(string $name): bool {
+    private function get_category_by_name(string $name) {
         global $DB;
-        return $DB->record_exists('user_info_category', ['name' => $name]);
+        $record = $DB->get_record('user_info_category', ['name' => $name]);
+        return $record ? $record->id : false;
     }
 
     /**
@@ -59,6 +60,10 @@ class profile_field_importer implements importer_field_interface {
     /**
      * Imports profile fields from an array of data.
      *
+     * This import is idempotent: running it multiple times is safe.
+     * - If a category already exists, it will be reused (not an error)
+     * - If a field already exists, it will be skipped (not an error)
+     *
      * @param array $data The imported data, decoded from JSON. Must contain 'category' and 'fields'.
      * @return void
      */
@@ -70,27 +75,35 @@ class profile_field_importer implements importer_field_interface {
             throw new moodle_exception('invalidjsonstructure', 'tool_customfields_exportimport');
         }
 
-        if ($this->category_name_exist($data['category']['name'])) {
-            throw new moodle_exception('categorynameexists', 'tool_customfields_exportimport', null, $data['category']['name']);
-        }
+        // Check if category already exists; if not, create it
+        $category_id = $this->get_category_by_name($data['category']['name']);
 
-        $category = new stdClass();
-        $category->name = clean_param($data['category']['name'], PARAM_TEXT);
-        require_once($CFG->dirroot.'/user/profile/definelib.php');
-        profile_save_category($category);
+        if ($category_id === false) {
+            // Category doesn't exist, create it
+            $category = new stdClass();
+            $category->name = clean_param($data['category']['name'], PARAM_TEXT);
+            require_once($CFG->dirroot.'/user/profile/definelib.php');
+            profile_save_category($category);
 
-        if (empty($category->id)) {
-            throw new moodle_exception('insertcategoryfailed', 'tool_customfields_exportimport');
+            if (empty($category->id)) {
+                throw new moodle_exception('insertcategoryfailed', 'tool_customfields_exportimport');
+            }
+
+            $category_id = $category->id;
+        } else {
+            // Category already exists, reuse it
+            require_once($CFG->dirroot.'/user/profile/definelib.php');
         }
 
         foreach ($data['fields'] as $field) {
 
-            if ($this->field_shortname_exist($field['shortname'], $category->id)) {
-                throw new moodle_exception('fieldshortnameexists', 'tool_customfields_exportimport', null, $field['shortname']);
+            // Skip field if it already exists in this category (idempotent behavior)
+            if ($this->field_shortname_exist($field['shortname'], $category_id)) {
+                continue;
             }
 
             $fieldobj = new stdClass();
-            $fieldobj->categoryid = $category->id;
+            $fieldobj->categoryid = $category_id;
             $fieldobj->shortname = clean_param($field['shortname'], PARAM_ALPHANUMEXT);
             $fieldobj->name = clean_param($field['name'], PARAM_TEXT);
             $fieldobj->datatype = clean_param($field['datatype'], PARAM_ALPHANUMEXT);
@@ -136,7 +149,8 @@ class profile_field_importer implements importer_field_interface {
 
             $defineclass = 'profile_define_' . $fieldobj->datatype;
             if (!class_exists($defineclass)) {
-                throw new moodle_exception('invaliddatatype', 'tool_customfields_exportimport', '', $fieldobj->datatype);
+                $error_detail = $fieldobj->name . ' (' . $fieldobj->datatype . ')';
+                throw new moodle_exception('invaliddatatype', 'tool_customfields_exportimport', '', $error_detail);
             }
 
             profile_save_field($fieldobj, $editors);
